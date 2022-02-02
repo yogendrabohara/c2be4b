@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_22_145653) do
+ActiveRecord::Schema.define(version: 2022_02_02_075224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,21 @@ ActiveRecord::Schema.define(version: 2021_11_22_145653) do
     t.index ["user_id"], name: "index_prospects_on_user_id"
   end
 
+  create_table "prospects_files", force: :cascade do |t|
+    t.string "file_path"
+    t.integer "email_index"
+    t.integer "first_name_index"
+    t.integer "last_name_index"
+    t.boolean "force"
+    t.boolean "has_headers"
+    t.integer "total"
+    t.integer "done"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_prospects_files_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email"
     t.string "password_digest"
@@ -50,4 +65,5 @@ ActiveRecord::Schema.define(version: 2021_11_22_145653) do
 
   add_foreign_key "campaigns", "users"
   add_foreign_key "prospects", "users"
+  add_foreign_key "prospects_files", "users"
 end
