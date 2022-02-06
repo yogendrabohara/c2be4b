@@ -1,15 +1,22 @@
 class Api::ProspectsFilesController < ApplicationController
   def import
-	post_params = prospects_file_params
+    prospects_file = ProspectsFile.new({
+      **prospects_file_params,
+      user_id: @user.id,
+    })
 	
-	# Save the file into Rails Active Storage
+    result = ""
+    if prospects_file.save
+      result = "success"
+    else
+      result = "failed"
+    end
 
-
-    render json: {"result": post_params}
+    render json: {"result": result, "data": ""}
   end
 
   private
     def prospects_file_params
-	  params.permit(:file, :email_index, :first_name_index, :last_name_index, :force, :has_headers)
+	    params.permit(:csv_file, :file_path, :email_index, :first_name_index, :last_name_index, :force, :has_headers)
     end
 end
