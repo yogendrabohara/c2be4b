@@ -6,7 +6,7 @@ class Api::ProspectsFilesController < ApplicationController
     })
 	
     result = ""
-    if prospects_file.save
+    if prospects_file.save!
       ProspectsFilesImportJob.perform_later(prospects_file.id)
       result = "success"
     else
