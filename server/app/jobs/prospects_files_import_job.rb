@@ -77,6 +77,5 @@ class ProspectsFilesImportJob < ApplicationJob
       prospects_file.total = total
       prospects_file.done = row_number
       prospects_file.save!()
-      sleep 5
     end
 end
