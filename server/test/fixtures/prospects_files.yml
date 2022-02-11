@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  file_path: MyString
+  email_index: 1
+  first_name_index: 1
+  last_name_index: 1
+  force: false
+  has_headers: false
+  total: 1
+  done: 1
+  user: one
+
+two:
+  file_path: MyString
+  email_index: 1
+  first_name_index: 1
+  last_name_index: 1
+  force: false
+  has_headers: false
+  total: 1
+  done: 1
+  user: two
