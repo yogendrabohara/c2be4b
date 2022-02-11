@@ -27,7 +27,7 @@ class Api::ProspectsFilesController < ApplicationController
       return render status: 403, json: {message: "The prospect file does not belong to this user."}
     end
 
-    render json: {total: prospects_file.total, done: prospects_file.done}
+    render json: {total: prospects_file.total, done: prospects_file.prospects.count()}
   end
 
   private

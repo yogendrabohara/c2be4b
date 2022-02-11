@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_06_073034) do
+ActiveRecord::Schema.define(version: 2022_02_11_045836) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,8 @@ ActiveRecord::Schema.define(version: 2022_02_06_073034) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
+    t.bigint "prospects_file_id"
+    t.index ["prospects_file_id"], name: "index_prospects_on_prospects_file_id"
     t.index ["user_id"], name: "index_prospects_on_user_id"
   end
 
@@ -75,7 +77,6 @@ ActiveRecord::Schema.define(version: 2022_02_06_073034) do
     t.boolean "force"
     t.boolean "has_headers"
     t.integer "total"
-    t.integer "done"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -93,6 +94,7 @@ ActiveRecord::Schema.define(version: 2022_02_06_073034) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "campaigns", "users"
+  add_foreign_key "prospects", "prospects_files"
   add_foreign_key "prospects", "users"
   add_foreign_key "prospects_files", "users"
 end

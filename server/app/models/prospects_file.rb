@@ -1,5 +1,6 @@
 class ProspectsFile < ApplicationRecord
   belongs_to :user
+  has_many :prospects
   has_one_attached :csv_file
 
   validates :email_index, presence: { message: "Please enter email_index" }
