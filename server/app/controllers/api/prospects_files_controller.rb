@@ -17,10 +17,14 @@ class Api::ProspectsFilesController < ApplicationController
   end
 
   def progress
-    prospects_file = ProspectsFile.find(params.require(:id))
+    prospects_file = ProspectsFile.find_by(id: params.require(:id))
+
+    if prospects_file.nil?
+      return render status: 404, json: {message: "The prospect file does not exist."}
+    end
 
     if prospects_file.user_id != @user.id
-      return render status: 403, json: {message: "The prospect does not belong to this user."}
+      return render status: 403, json: {message: "The prospect file does not belong to this user."}
     end
 
     render json: {total: prospects_file.total, done: prospects_file.done}
