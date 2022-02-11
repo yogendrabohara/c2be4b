@@ -5,28 +5,18 @@ class ProspectsFilesImportJob < ApplicationJob
 
   def perform(prospects_files_import_job_id)
     prospects_file = ProspectsFile.find(prospects_files_import_job_id)
-    tmp_file_path = Rails.root.join("tmp", "csv_file.csv")
+    prospects_file.csv_file.open do |file|
+      total = file.count()
+      row_number = 1
+      CSV.foreach(file, encoding: "CP932:UTF-8") do |line|
+        # Insert to User
+        insert(row_number, line, prospects_file)
+        # Update progress to ProspectsFile
+        update_progress(total, row_number, prospects_file)
 
-    # Write to tmp file
-    file_content = prospects_file.csv_file.download
-    File.open(tmp_file_path, "wb") do |file|
-      file.write(file_content)
+        row_number += 1
+      end
     end
-
-    total = File.open(tmp_file_path).count()
-    row_number = 1
-    CSV.foreach(tmp_file_path, encoding: "CP932:UTF-8") do |line|
-      # Insert to User
-      insert(row_number, line, prospects_file)
-      # Update progress to ProspectsFile
-      update_progress(total, row_number, prospects_file)
-
-      row_number += 1
-    end
-
-    ensure
-      # Remove tmp file
-      File.delete(tmp_file_path) if File.exist?(tmp_file_path)
   end
 
   private
